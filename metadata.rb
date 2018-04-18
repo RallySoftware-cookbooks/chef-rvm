@@ -1,12 +1,12 @@
 name 'chef_rvm'
-maintainer 'R&R Innovation LLC'
-maintainer_email 'work at murga.kiev.ua'
+maintainer 'CA'
+maintainer_email 'operations-rally@ca.com'
 license 'Apache-2.0'
 description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url 'https://github.com/RallySoftware-cookbooks/chef-rvm' if respond_to?(:source_url)
 issues_url 'https://github.com/RallySoftware-cookbooks/chef-rvm/issues' if respond_to?(:issues_url)
-version '2.0.3'
+version '2.1.0'
 chef_version '>= 12.5' if respond_to?(:chef_version)
 
 recipe 'chef_rvm', 'Installs all'
@@ -33,7 +33,7 @@ depends 'mono' # for ironruby
 depends 'homebrew' # for jruby
 
 # if installing on Debian-based distros
-depends 'apt'
+# depends 'apt'
 
 # for installing on OSX, this is required for installation and compilation
 # depends 'homebrew'

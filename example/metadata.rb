@@ -15,5 +15,4 @@ supports 'debian'
 
 depends 'chef_rvm'
 depends 'build-essential'
-depends 'apt'
 depends 'java'

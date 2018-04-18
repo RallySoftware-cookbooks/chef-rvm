@@ -11,7 +11,7 @@ property :rvmrc, [Hash, NilClass], default: nil
 action :install do
   unless rvm.rvm?
     rvm.rvm_install
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   end
   rubies = new_resource.rubies
   if rubies
@@ -33,7 +33,7 @@ action :upgrade do
   if rvm.rvm?
     Chef::Log.info "Upgrade RVM for user #{user}"
     rvm.rvm_get(:stable)
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   else
     Chef::Log.info "Rvm is not installed for #{user}"
   end
@@ -43,7 +43,7 @@ action :implode do
   if rvm.rvm?
     Chef::Log.info "Implode RVM for user #{user}"
     rvm.rvm_implode
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   else
     Chef::Log.info "Rvm is not installed for #{user}"
   end
