@@ -16,7 +16,7 @@ action :install do
   else
     Chef::Log.debug("Install gem #{gems} #{version} on gemset #{ruby_string} for user #{user}.")
     rvm.gem_install(ruby_string, gems, version)
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -24,7 +24,7 @@ end
   action action_name do
     if rvm.gem?(ruby_string, gems, version)
       Chef::Log.debug "#{action_name.to_s.capitalize} gem #{gems} #{version} from gemset #{ruby_string} for user #{user}."
-      updated_by_last_action(true)
+      new_resource.updated_by_last_action(true)
     else
       Chef::Log.debug "Gem #{gems} #{version} is not installed on gemset #{ruby_string} for user #{user}."
     end

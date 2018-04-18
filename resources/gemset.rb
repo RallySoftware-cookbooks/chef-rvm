@@ -10,7 +10,7 @@ action :create do
     Chef::Log.info("Create gemset #{ruby_string} for user #{user}.")
     rvm.gemset_create(ruby_string)
     rvm.gem_install(ruby_string, :bundler)
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -19,7 +19,7 @@ end
     if rvm.gemset?(ruby_string)
       Chef::Log.info("#{action_name.capitalize} gemset #{ruby_string} for user #{user}.")
       rvm.send("gemset_#{action_name}".to_sym, ruby_string)
-      updated_by_last_action(true)
+      new_resource.updated_by_last_action(true)
     else
       Chef::Log.info("Gemset #{ruby_string} for user #{user} is not exist.")
     end
