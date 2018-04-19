@@ -10,7 +10,7 @@ action :create do
   else
     Chef::Log.debug("Create wrapper #{prefix}_#{binary} for #{ruby_string}!")
     rvm.wrapper_create(ruby_string, prefix, binary)
-    updated_by_last_action(true)
+    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -20,7 +20,7 @@ action :create_or_update do
     rvm.wrapper_delete(prefix, binary)
   end
   run_action(:create)
-  updated_by_last_action(true)
+  new_resource.updated_by_last_action(true)
 end
 
 action_class.class_eval do
