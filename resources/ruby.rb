@@ -7,25 +7,29 @@ property :patch, [String, NilClass], default: nil
 property :default, [TrueClass, FalseClass, NilClass], default: nil
 
 action :install do
-  if rvm.ruby?(new_resource.version)
-    Chef::Log.debug "Ruby #{new_resource.version} already installed for user #{new_resource.user}"
+  user = new_resource.user
+  version = new_resource.version
+  patch = new_resource.patch
+  default = new_resource.default
+  if rvm.ruby?(version)
+    Chef::Log.debug "Ruby #{version} already installed for user #{user}"
   else
-    requirements_install(new_resource.version)
-    Chef::Log.debug "Install ruby #{new_resource.version} for user #{new_resource.user}"
-    rvm.ruby_install(new_resource.version, new_resource.patch)
-    rvm.gemset_create(new_resource.version)
-    new_resource.updated_by_last_action(true)
+    requirements_install(version)
+    Chef::Log.debug "Install ruby #{version} for user #{user}"
+    rvm.ruby_install(version, patch)
+    rvm.gemset_create(version)
   end
-  rvm.ruby_set_default(new_resource.version) if new_resource.default
+  rvm.ruby_set_default(version) if default
 end
 
 %i[remove uninstall reinstall].each do |action_name|
   action action_name do
-    if rvm.ruby?(new_resource.version)
-      Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{new_resource.version} for user #{new_resource.user}"
-      new_resource.updated_by_last_action(true)
+    user = new_resource.user
+    version = new_resource.version
+    if rvm.ruby?(version)
+      Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{version} for user #{user}"
     else
-      Chef::Log.debug "Ruby #{new_resource.version} is not installed for user #{new_resource.user}"
+      Chef::Log.debug "Ruby #{version} is not installed for user #{user}"
     end
   end
 end

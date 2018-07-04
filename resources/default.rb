@@ -11,12 +11,11 @@ property :rvmrc, [Hash, NilClass], default: nil
 action :install do
   unless rvm.rvm?
     rvm.rvm_install
-    new_resource.updated_by_last_action(true)
   end
-  rubies = new_resource.rubies
-  if rubies
-    rubies = Array(rubies) if rubies.is_a?(String)
-    rubies.each do |ruby_string, options|
+  rubies_arr = new_resource.rubies
+  if rubies_arr
+    rubies_arr = Array(rubies_arr) if rubies_arr.is_a?(String)
+    rubies_arr.each do |ruby_string, options|
       options ||= {}
       chef_rvm_ruby "#{new_resource.user}:#{ruby_string}" do
         user new_resource.user
@@ -31,21 +30,21 @@ end
 
 action :upgrade do
   if rvm.rvm?
-    Chef::Log.info "Upgrade RVM for user #{user}"
+    Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
     rvm.rvm_get(:stable)
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.info "Rvm is not installed for #{user}"
+    Chef::Log.info "Rvm is not installed for #{new_resource.user}"
   end
 end
 
 action :implode do
   if rvm.rvm?
-    Chef::Log.info "Implode RVM for user #{user}"
+    Chef::Log.info "Implode RVM for user #{new_resource.user}"
     rvm.rvm_implode
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.info "Rvm is not installed for #{user}"
+    Chef::Log.info "Rvm is not installed for #{new_resource.user}"
   end
 end
 
