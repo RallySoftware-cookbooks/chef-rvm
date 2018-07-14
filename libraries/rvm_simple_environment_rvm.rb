@@ -9,7 +9,7 @@ class ChefRvmCookbook
 
       def rvm!(*args)
         args.unshift :rvm
-        shell_out!(*args)
+        shell_out(*args)
       end
 
       def rvm?
